@@ -25,6 +25,7 @@ ruleTester.run("map", rule, {
         "$.map(collection, fn)",
         "_.flatMap(collection, fn)",
         "map(collection, fn)",
+        "_.map(collection, fn, 3)",
         // "Array.isArray(collection) ? collection.map(fn) : _.map(collection, fn)" // todo: handle this case
     ],
 
