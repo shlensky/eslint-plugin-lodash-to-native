@@ -102,5 +102,26 @@ ruleTester.run("map", rule, {
             [].map(fn);
             `
         },
+        {
+            code: `
+            function x() {
+                var m1 = _.map([], fn);
+                _ = {map: function() { }};
+                function z() {
+                    var m2 = _.map([], fn);
+                }
+            }
+            `,
+            errors: [{message}],
+            output: `
+            function x() {
+                var m1 = [].map(fn);
+                _ = {map: function() { }};
+                function z() {
+                    var m2 = _.map([], fn);
+                }
+            }
+            `
+        },
     ]
 });
