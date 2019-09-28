@@ -8,7 +8,7 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-var rule = require("../../../lib/rules/map"),
+const rule = require("../../../lib/rules/map"),
 
     RuleTester = require("eslint").RuleTester;
 
@@ -26,7 +26,8 @@ ruleTester.run("map", rule, {
         "_.flatMap(collection, fn)",
         "map(collection, fn)",
         "_.map(collection, fn, 3)",
-        // "Array.isArray(collection) ? collection.map(fn) : _.map(collection, fn)" // todo: handle this case
+        "_.map({a: 1}, fn)",
+        // "Array.isArray(collection) ? collection.map(fn) : _.map(collection, fn)"
     ],
 
     invalid: [
@@ -39,6 +40,11 @@ ruleTester.run("map", rule, {
             code: "function x() { return _.map(collection, fn); }",
             errors: [{message}],
             output: "function x() { return Array.isArray(collection) ? collection.map(fn) : _.map(collection, fn); }"
+        },
+        {
+            code: "_.map([1, 2, 3], fn)",
+            errors: [{message}],
+            output: "[1, 2, 3].map(fn)"
         },
     ]
 });
