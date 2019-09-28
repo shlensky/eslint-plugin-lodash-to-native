@@ -47,5 +47,60 @@ ruleTester.run("map", rule, {
             errors: [{message}],
             output: "[1, 2, 3].map(fn)"
         },
+
+        // Check if lodash was overridden
+        {
+            code: `
+            function x() {
+                var m1 = _.map([], fn);
+                _ = {map: function() { }};
+                var m2 = _.map([], fn);
+            }
+            `,
+            errors: [{message}],
+            output: `
+            function x() {
+                var m1 = [].map(fn);
+                _ = {map: function() { }};
+                var m2 = _.map([], fn);
+            }
+            `
+        },
+        {
+            code: `
+            function x() {
+                var m1 = _.map([], fn);
+                $ = {map: function() { }};
+                var m2 = _.map([], fn);
+            }
+            `,
+            errors: [{message}, {message}],
+            output: `
+            function x() {
+                var m1 = [].map(fn);
+                $ = {map: function() { }};
+                var m2 = [].map(fn);
+            }
+            `
+        },
+        {
+            code: `
+            function x() {
+                var m1 = _.map([], fn);
+                _ = {map: function() { }};
+                var m2 = _.map([], fn);
+            }
+            _.map([], fn);
+            `,
+            errors: [{message}, {message}],
+            output: `
+            function x() {
+                var m1 = [].map(fn);
+                _ = {map: function() { }};
+                var m2 = _.map([], fn);
+            }
+            [].map(fn);
+            `
+        },
     ]
 });
