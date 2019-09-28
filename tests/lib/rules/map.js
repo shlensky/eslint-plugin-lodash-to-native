@@ -17,8 +17,8 @@ const rule = require("../../../lib/rules/map"),
 // Tests
 //------------------------------------------------------------------------------
 
-var message = "Use native [].map method for arrays instead of lodash _.map";
-var ruleTester = new RuleTester();
+const message = "Use native [].map method for arrays instead of lodash _.map";
+const ruleTester = new RuleTester();
 ruleTester.run("map", rule, {
 
     valid: [
@@ -27,7 +27,8 @@ ruleTester.run("map", rule, {
         "map(collection, fn)",
         "_.map(collection, fn, 3)",
         "_.map({a: 1}, fn)",
-        // "Array.isArray(collection) ? collection.map(fn) : _.map(collection, fn)"
+        "Array.isArray(collection) ? collection.map(fn) : _.map(collection, fn)",
+        "Array.isArray(getCollection(blah, blah2)) ? getCollection(blah, blah2).map(fn) : _.map(getCollection(blah, blah2), fn)",
     ],
 
     invalid: [
