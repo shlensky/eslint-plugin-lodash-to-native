@@ -29,6 +29,7 @@ ruleTester.run("map", rule, {
         "_.map({a: 1}, fn)",
         "Array.isArray(collection) ? collection.map(fn) : _.map(collection, fn)",
         "Array.isArray(getCollection(blah, blah2)) ? getCollection(blah, blah2).map(fn) : _.map(getCollection(blah, blah2), fn)",
+        "_.map(Math.random() < 0.5 ? [1,2,3] : {a: 'b'}, function(n) { return n + 1 })",
     ],
 
     invalid: [
